@@ -1,0 +1,13 @@
+INPUT 6 I0 I1 I2 I3 S0 S1
+OUTPUT 1 OUT
+NOT S0 nS0
+NOT S1 nS1
+AND nS0 I0  t1a
+AND S0  I1  t1b
+AND nS0 I2  t1c
+AND S0  I3  t1d
+OR  t1a t1b t2a
+OR  t1c t1d t2b
+AND nS1 t2a t3a
+AND S1  t2b t3b
+OR  t3a t3b OUT

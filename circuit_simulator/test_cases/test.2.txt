@@ -1,0 +1,8 @@
+INPUT 3 A B C
+OUTPUT 1 OUT
+NOT A nA
+AND nA C t1
+AND B C t2
+AND A B t3
+OR t1 t2 t12
+OR t12 t3 OUT
