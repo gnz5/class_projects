@@ -9,11 +9,11 @@ OUTPUT (number of outputs) (output1 output2 ... outputN)
 
 After this any gate can be represented using the following format.
 
-![Screenshot][gate_descriptions.JPG]
+![Screenshot](gate_descriptions.JPG)
 
 The program then tests the circuit using each possible combination of inputs and prints out its truth table.
 
-![Screenshot][example_output.JPG]
+![Screenshot](example_output.JPG)
 
 To run the program
 
