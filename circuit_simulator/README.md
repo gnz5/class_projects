@@ -12,6 +12,7 @@ After this any gate can be represented using the following format.
 ![Screenshot](gate_descriptions.JPG)
 
 The program then tests the circuit using each possible combination of inputs and prints out its truth table.
+Here is an example circuit.
 
 ![Screenshot](example_output.JPG)
 
