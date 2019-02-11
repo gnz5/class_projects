@@ -1,0 +1,82 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">{{ name }}</h1>
+        <p class="drinker-details" *ngIf="drinker">
+            {{ drinker?.address }} <span *ngIf="drinker.address && drinker.city">|</span> {{ drinker?.city }}, {{ drinker.state }}
+            <br>
+            {{ drinker?.phone }}
+        </p>
+    </div>
+</div>
+
+<div class="container">
+    <h5 class="text-center" font-weight=lighter>{{ name }}'s Transactions</h5>
+    <br>
+    <p-table [value]="transactions_time">
+        <ng-template pTemplate="header">
+          <tr>
+            <th scope="col">Bar</th>
+            <th scope="col">Time</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row>
+          <tr>
+            <td>{{ row['bar'] }}</td>
+            <td>{{ row['time'] }}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+</div>
+<br><br>
+
+<div class="container">
+    <br>
+    <div id="bargraph-topBeers">
+    </div>
+</div>>
+<br><br>
+
+<div class="container">
+    <br>
+    <div id="bargraph-barSpending">
+    </div>
+</div>>
+<br><br>
+
+<!--
+<div class="container">
+    <h2 class="text-center font-weight=light">Drinker</h2>
+    <br>
+    <p-table [value]="drinker">
+        <ng-template pTemplate="header">
+            <tr>
+                <th scope="col"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td></td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+-->
+
+<!--
+<div class="container">
+    <h2 class="text-center font-weight=light">Drinker</h2>
+    <br>
+    <p-table [value]="drinker">
+        <ng-template pTemplate="header">
+            <tr>
+                <th scope="col"></th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td></td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+-->

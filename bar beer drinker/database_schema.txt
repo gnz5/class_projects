@@ -1,0 +1,61 @@
+CREATE TABLE bars(name char(50), license char(10), phone char(10), address char (50), 
+					state char(15), opening int, closing int, tax float,
+					PRIMARY KEY(license),
+					UNIQUE KEY(phone));
+
+CREATE TABLE drinkers(name char(20), address char (40), 
+						city char(20), state char(15), phone char(12),
+						PRIMARY KEY(name, address));
+				 
+CREATE TABLE beers(name char(50), manf char(30),
+					PRIMARY KEY(name, manf));
+                 
+CREATE TABLE frequents(drinker char(20), bar char(20),
+						PRIMARY KEY(drinker, bar),
+                        FOREIGN KEY (drinker) REFERENCES drinkers (name)
+                        ON UPDATE CASCADE ON DELETE CASCADE,
+                        FOREIGN KEY (bar) REFERENCES bars (name)
+                        ON UPDATE CASCADE ON DELETE CASCADE,
+                        CONSTRAINT freq_bars_w_likes CHECK (
+							(SELECT beer FROM sells s WHERE s.bar=bar) IN
+								(SELECT beer FROM likes l WHERE l.drinker=drinker)),
+						CONSTRAINT freq_bars_in_state CHECK (
+							(SELECT state FROM bars b WHERE b.name=bar)=
+								(SELECT state FROM drinkers d WHERE d.drinker=drinker)));	
+
+CREATE TABLE likes(drinker char(20), beer char(20),
+					PRIMARY KEY(drinker, beer),
+                    FOREIGN KEY (drinker) REFERENCES drinkers (name)
+					ON UPDATE CASCADE ON DELETE CASCADE,
+                    FOREIGN KEY (beer) REFERENCES beers (name)
+                    ON UPDATE CASCADE ON DELETE CASCADE);
+
+CREATE TABLE sells(bar char(20), beer char(20), price float,
+					PRIMARY KEY(bar, beer),
+                    FOREIGN KEY (bar) REFERENCES bars (name)
+                    ON UPDATE CASCADE ON DELETE CASCADE,
+                    FOREIGN KEY (beer) REFERENCES beers (name)
+                    ON UPDATE CASCADE ON DELETE CASCADE);
+                    
+CREATE TABLE menu(bar char(20), item_name char(20), price float,
+					PRIMARY KEY(bar, item_name),
+                    FOREIGN KEY (bar) REFERENCES bars (name)
+                    ON UPDATE CASCADE ON DELETE CASCADE);
+
+CREATE TABLE transactions(id int auto_increment, drinker char (20), bar char(50),
+							time int, tax float, tip float, total float,
+							PRIMARY KEY(id),
+                            FOREIGN KEY (drinker) REFERENCES drinkers (name)
+                            ON UPDATE CASCADE ON DELETE CASCADE);			
+
+CREATE TABLE items(id int, item char(20), item_type char(2),
+					FOREIGN KEY (id) REFERENCES transactions (id));	
+############################################################################			
+DROP TABLE bars, drinkers, frequents, items, likes, transactions, beer, sells;
+					  
+SET SQL_SAFE_UPDATES = 0;
+DELETE FROM bars WHERE true; 
+DELETE FROM drinkers where true;
+SET SQL_SAFE_UPDATES = 1;
+
+SET FOREIGN_KEY_CHECKS = 0;

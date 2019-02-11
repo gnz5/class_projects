@@ -1,0 +1,22 @@
+# Transactions issued during operating hours
+
+SELECT * FROM transactions t where(
+	#closing time is 2300 and time of transaction is greater than 2300 or less than opening
+	EXISTS(SELECT * FROM bars b WHERE t.bar = b.name AND b.closing = 2300 AND (t.time > b.closing OR t.time < b.opening))
+    OR
+	# closing is 2400(aka 0000), 0100, or 0200 and time of transaction is great than closing and less than opening
+	EXISTS(SELECT * FROM bars b WHERE t.bar = b.name AND b.closing != 2300 AND t.time > (b.closing MOD 2400) AND t.time < b.opening)
+);
+	
+# Drinkers frequents bars in their state
+
+SELECT * FROM frequents f WHERE( 
+	(SELECT DISTINCT state FROM bars b where f.bar = b.name) != (SELECT DISTINCT state FROM drinkers d where f.drinker = d.name) 
+);
+
+# For any 2 beers b1, b2, either price(b1) >= price (b2)
+# for all bars or the reverse
+
+SELECT * FROM sells s1, sells s2 WHERE(
+	s1.bar = s2.bar AND s1.price > s2.price AND s1.price <= s2.price
+)

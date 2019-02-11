@@ -1,0 +1,84 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">{{ beerName }}</h1>
+    <p class="beer-details" *ngIf="manufacturer">
+      Made by <i>{{ manufacturer }}</i>
+    </p>
+  </div>
+</div>
+
+<div class="container">
+  <br>
+  <div>
+    <span class="font-weight-light result-count">Top Selling Bars</span>
+  </div>
+  <br>
+  <p-table [value]="topSellingBars">
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">Bar</th>
+        <th scope="col">Number of Beers Sold</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        <td>{{ row['bar'] }}</td>
+        <td>{{ row['s'] }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<br><br>
+
+<div class="container">
+  <br>
+  <div>
+    <span class="font-weight-light result-count">Top Drinkers</span>
+  </div>
+  <br>
+  <p-table [value]="topDrinkers">
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">Drinker</th>
+        <th scope="col">Number of Purchases</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-row>
+      <tr>
+        <td>{{ row['drinker'] }}</td>
+        <td>{{ row['count(*)'] }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<br><br>
+<br><br>
+
+<div class="container">
+  <br>
+  <div id="bargraph-timeDist">
+  </div>
+</div>>
+
+<div class="container">
+  <br>
+  <div>
+    <span class="font-weight-light result-count">Sold at {{ beerLocations?.length }}</span>
+    <p-dropdown class="float-right text-left" *ngIf="filterOptions" [options]="filterOptions" (onChange)="sortBy($event.value)"></p-dropdown>
+  </div>
+  <br>
+  <p-table [value]="beerLocations" sortMode="multiple" sortField="price">
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">Bar</th>
+        <th scope="col">Price</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-bar>
+      <tr>
+        <td><a routerLink="/bars/{{ bar.bar }}">{{ bar.bar }}</a></td>
+        <td>{{ bar.price | currency }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

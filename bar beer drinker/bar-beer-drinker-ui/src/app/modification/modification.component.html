@@ -1,0 +1,108 @@
+<div class="container">
+  <h4 class="display-6">Verification Interface</h4>
+  <label>To check data patterns, paste statements in query interface.</label> <br>
+  <ul>
+      <li>
+          <label>Verify transactions issued during operating hours</label> <br>
+          <label>
+              SELECT * FROM transactions t where(
+                EXISTS(SELECT * FROM bars b WHERE t.bar = b.name AND b.closing = 2300 AND (t.time > b.closing OR t.time < b.opening))
+                OR
+                EXISTS(SELECT * FROM bars b WHERE t.bar = b.name AND b.closing != 2300 AND t.time > (b.closing MOD 2400) AND t.time < b.opening)
+              );
+          </label>
+      </li>
+      <li>
+          <label>Verify drinkers frequents bars in their state</label> <br>
+          <label>
+            SELECT * FROM frequents f WHERE( 
+              (SELECT DISTINCT state FROM bars b where f.bar = b.name) != (SELECT DISTINCT state FROM drinkers d where f.drinker = d.name) 
+            );
+          </label>
+      </li>
+      <li>
+          <label>Verify for any 2 beers b1, b2, either price(b1) >= price (b2) for all bars or the reverse</label> <br>
+          <label>
+            SELECT * FROM sells s1, sells s2 WHERE(
+              s1.bar = s2.bar AND s1.price > s2.price AND s1.price <= s2.price
+            );            
+          </label>
+      </li>
+  </ul>
+</div>
+
+<div class="container">
+  <h4 class="display-6">Query Interface</h4>
+  <textarea #query rows="4" cols="50"></textarea> <br>
+  <button 
+    (click)="execute(query.value);">
+    Execute
+  </button> <br>
+  <label>Server Response: </label> <br>
+  <!--
+  <label *ngFor="let row of serverResponse">
+    {{ row }} <br>
+  </label>
+  -->
+  <ul>
+      <li *ngFor="let row of serverResponse">
+          {{ row }}
+      </li>
+  </ul>
+</div>
+
+<div class="container">
+  <br>
+    <!--UPDATE--><!--UPDATE--><!--UPDATE--><!--UPDATE-->
+    <h4 class="display-6">UPDATE</h4>
+    <label id="labels"> 
+      UPDATE <input #table_update placeholder="table name"/> 
+      SET <input #attributes_update placeholder="attribute assignments"/> 
+      WHERE <input #conditions_update placeholder="condition on tuples"/>;
+    </label>
+    <br>
+    <button 
+        (click)="update(table_update.value, attributes_update.value, conditions_update.value);
+                  table_update.value=''; attributes_update.value=''; conditions_update.value=''; ">
+        Execute
+    </button>
+    <br><br>
+    <!--DELETE--><!--DELETE--><!--DELETE--><!--DELETE-->
+    <h4 class="display-6">DELETE</h4>
+    <label id="labels"> 
+      DELETE FROM <input #table_delete placeholder="table name"/> 
+      WHERE <input #conditions_delete placeholder="condition on tuples"/>;
+    </label>
+    <br>
+    <button 
+        (click)="delete(table_delete.value, conditions_delete.value);
+                  table_delete.value=''; conditions_delete.value=''; ">
+        Execute
+    </button>
+    <br><br>
+     <!--INSERT--><!--INSERT--><!--INSERT--><!--INSERT-->
+     <h4 class="display-6">INSERT</h4>
+     <label id="labels"> 
+       INSERT INTO <input #table_insert placeholder="table name"/> 
+       VALUES ( <input #tuples__insert placeholder="list of values"/> );
+     </label>
+     <br>
+     <button 
+         (click)="insert(table_insert.value, tuples__insert.value);
+                    table_insert.value=''; tuples__insert.value=''; ">
+         Execute
+     </button>
+     <br><br>
+</div>
+<div class="container">
+  <h2 class="display-4">Tables</h2>
+  <h2 class="display-6">bars(name, license, phone, address, state, opening, closing, Tax)</h2>
+  <h2 class="display-6">beers(name, manf)</h2>
+  <h2 class="display-6">drinkers(name, address, city, state, phone)</h2>
+  <h2 class="display-6">frequents(drinker, bar)</h2>
+  <h2 class="display-6">items(id, item, item_type)</h2>
+  <h2 class="display-6">likes(drinker, beer)</h2>
+  <h2 class="display-6">menu(bar, item_name, price)</h2>
+  <h2 class="display-6">sells(bar, beer, price)</h2>
+  <h2 class="display-6">transactions(id, drinker, bar, time, tax, tip, total)</h2>
+</div>

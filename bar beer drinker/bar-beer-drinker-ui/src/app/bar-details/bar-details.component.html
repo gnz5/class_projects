@@ -1,0 +1,87 @@
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">{{ barName }}</h1>
+        <p class="bar-details" *ngIf="barDetails">
+            {{ barDetails?.address }} <span *ngIf="barDetails.address && barDetails.city">|</span> {{ barDetails?.city }}
+            <br>
+            {{ barDetails?.phone }}
+        </p>
+    </div>
+</div>
+    
+<div class="container">
+    <br>
+    <div id="bargraph-drinkers">
+    </div>
+</div>>
+
+<br>    
+<br>    
+
+<div class="container">
+    <br>
+    <div id="bargraph-beers">
+    </div>
+</div>>
+
+<br>    
+<br>        
+
+<div class="container">
+    <br>
+    <div id="bargraph-manf">
+    </div>
+</div>>
+
+<div class="container">
+    <br>
+    <div id="bargraph-dayDist">
+    </div>
+</div>>
+
+<div class="container">
+    <br>
+    <div id="bargraph-weekDist">
+    </div>
+</div>>
+
+<div class="container">
+    <h1 class="display-4">Add a transaction</h1>
+    <br>
+    <label> <span id="labels"> id </span>
+        <input #id />
+    </label>
+    <br>
+    <label> <span id="labels"> drinker </span>
+        <input #drinker />
+    </label>
+    <br>
+    <label> <span id="labels"> bar </span>
+        <input #bar />
+    </label>
+    <br>
+    <label> <span id="labels"> time </span>
+        <input #time />
+    </label>
+    <br>
+    <label> <span id="labels"> tax </span>
+        <input #tax />
+    </label>
+    <br>
+    <label> <span id="labels"> tip </span>
+        <input #tip />
+    </label>
+    <br>
+    <label> <span id="labels"> total </span>
+        <input #total />
+    </label>
+    <br>
+    <button 
+        (click)="addTransaction(id.value,drinker.value,bar.value,time.value,tax.value,tip.value,total.value);">
+        add Transaction
+    </button>
+    <br><br><br>
+    <label>Server Response: </label>
+    <br>
+    <label>{{ serverResponse }}</label>
+</div>
